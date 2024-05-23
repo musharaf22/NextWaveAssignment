@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import Navbar from "./components/Navbar";
+import AddResource from "./pages/addResouce";
 function App() {
   return (
     <div className="relative">
@@ -9,6 +10,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/addresource" element={<AddResource />} />
       </Routes>
     </div>
   );
