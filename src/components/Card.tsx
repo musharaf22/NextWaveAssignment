@@ -1,3 +1,5 @@
+import { Link, useNavigate } from "react-router-dom";
+
 export interface ICardProps {
   data: {
     title: string;
@@ -11,18 +13,29 @@ export interface ICardProps {
 }
 
 const Card = ({ data }: ICardProps) => {
+  const navigate = useNavigate();
   return (
-    <div className="bg-white border border-gray-200 w-[360px] h-[192px] rounded-[4px] p-8">
+    <div className="bg-white border-2 border-gray-200 w-[360px] h-[192px] rounded-[8px] p-8">
       <div>
-        <div className="flex items-start border-2 border-red-500">
-          <img src={data.icon_url} alt="n/A" className="w-[44px] h-[44px]" />
+        <div className="flex items-center ">
+          <img
+            src={data?.icon_url}
+            alt="n/A"
+            className="w-[44px] h-[44px] border-2 border-gray-300 rounded-[8px]"
+          />
           <div className="ml-3">
-            <h1>Dropbox, Inc</h1>
-            <p>Cloud Service</p>
+            <h1 className="text-[16px] font-medium leading-[24px] text-[#171F46]">
+              {data?.title}
+            </h1>
+            <p className="text-[#7E858E] text-[12px]">{data?.category}</p>
           </div>
         </div>
-        <p className="my-4">www.google.com</p>
-        <p>It is a file hosting service</p>
+        <p className="my-4 text-[#0B69FF] cursor-pointer hover:underline text-[14px] !leading-[24px] no-underline	">
+          <a href={data.link} target="_blank">
+            {data?.link}
+          </a>
+        </p>
+        <p className="text-[#7E858E] text-[14px]">{data?.description}</p>
       </div>
     </div>
   );
