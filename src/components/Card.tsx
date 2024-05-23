@@ -1,5 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
-
 export interface ICardProps {
   data: {
     title: string;
@@ -13,7 +11,6 @@ export interface ICardProps {
 }
 
 const Card = ({ data }: ICardProps) => {
-  const navigate = useNavigate();
   return (
     <div className="bg-white border-2 border-gray-200 w-[360px] h-[192px] rounded-[8px] p-8">
       <div>

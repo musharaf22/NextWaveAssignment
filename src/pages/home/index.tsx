@@ -1,6 +1,6 @@
 import { useState } from "react";
+import Card from "../../components/Card";
 import FilterNAv from "../../components/FilterNAv";
-import Card, { ICardProps } from "../../components/Card";
 import homeData from "../utils/demoData/homepageData";
 
 const Home = () => {
@@ -22,7 +22,7 @@ const Home = () => {
 
         {/* //  */}
         <div className="grid grid-cols-3 gap-4">
-          {homeData.map((data: any) => {
+          {homeData.map((data) => {
             return <Card data={data} />;
           })}
         </div>
