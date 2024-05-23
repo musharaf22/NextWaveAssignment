@@ -12,7 +12,7 @@ export interface ICardProps {
 
 const Card = ({ data }: ICardProps) => {
   return (
-    <div className="bg-white border-2 border-gray-200 w-[360px] h-[192px] rounded-[8px] p-8">
+    <div className="bg-white border-2 border-gray-200 w-full md:w-[360px] h-[192px] rounded-[8px] p-8">
       <div>
         <div className="flex items-center ">
           <img
