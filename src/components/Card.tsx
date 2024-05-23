@@ -1,13 +1,7 @@
+import { IFetchData } from "../pages/home";
+
 export interface ICardProps {
-  data: {
-    title: string;
-    icon_url: string;
-    link: string;
-    description: string;
-    category: string;
-    tag: string;
-    id: string;
-  };
+  data: IFetchData;
 }
 
 const Card = ({ data }: ICardProps) => {

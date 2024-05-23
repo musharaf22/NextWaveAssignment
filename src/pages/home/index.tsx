@@ -2,11 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import Card from "../../components/Card";
 import FilterNAv from "../../components/FilterNAv";
 
+export interface IFetchData {
+  title: string;
+  icon_url: string;
+  link: string;
+  description: string;
+  category: string;
+  tag: string;
+  id: string;
+}
 const Home = () => {
   // Managing States
   const homeData = useRef<any>(null);
   const [activeFilter, setActiveFilter] = useState<string>("resources");
-  const [listingData, setListingData] = useState<any[]>([]);
+  const [listingData, setListingData] = useState<IFetchData[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
 
   // Function that fetches data from api
@@ -43,17 +52,16 @@ const Home = () => {
           setActiveFilter={setActiveFilter}
           activeFilter={activeFilter}
         />
+        {/* // Search Input Box  */}
         <input
           type="text"
-          name=""
-          id=""
           className="p-2 w-full md:w-[40%] border border-gray-200 rounded-[4px] my-10 outline-none"
           placeholder="Search"
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
         />
 
-        {/* //  */}
+        {/* // Listing Cards */}
         {listingData?.filter(
           (data) =>
             data.tag ===
