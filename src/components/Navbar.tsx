@@ -1,13 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import Logo from "../pages/utils/icons/Logo";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-4 border-b border-gray-400 flex items-center justify-between bg-white">
       <div className="flex items-center justify-between w-[95%] m-auto">
         <Logo />
 
         <div className="flex items-center">
-          <button className="p-2 bg-[#0B69FF] text-white w-[93px] h-[42px] rounded-[4px] mr-4">
+          <button
+            className="p-2 bg-[#0B69FF] text-white w-[93px] h-[42px] rounded-[4px] mr-4"
+            onClick={() => navigate("/addresource")}
+          >
             ADD +
           </button>
           <img
