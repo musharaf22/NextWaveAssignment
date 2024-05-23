@@ -22,9 +22,15 @@ const Home = () => {
 
         {/* //  */}
         <div className="grid grid-cols-3 gap-4">
-          {homeData.map((data) => {
-            return <Card data={data} />;
-          })}
+          {homeData
+            .filter(
+              (data) =>
+                data.tag ===
+                activeFilter.toLowerCase().substring(0, activeFilter.length - 1)
+            )
+            .map((data) => {
+              return <Card data={data} />;
+            })}
         </div>
       </div>
     </div>
