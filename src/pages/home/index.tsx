@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Card from "../../components/Card";
 import FilterNAv from "../../components/FilterNAv";
+import Loader from "../../components/Loader";
 
 export interface IFetchData {
   title: string;
@@ -17,15 +18,21 @@ const Home = () => {
   const [activeFilter, setActiveFilter] = useState<string>("resources");
   const [listingData, setListingData] = useState<IFetchData[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Function that fetches data from api
   const fetchData = async () => {
-    const resp = await fetch(
-      "https://media-content.ccbp.in/website/react-assignment/resources.json"
-    );
-    const data = await resp.json();
-    homeData.current = data;
-    setListingData(data);
+    try {
+      const resp = await fetch(
+        "https://media-content.ccbp.in/website/react-assignment/resources.json"
+      );
+      const data = await resp.json();
+      homeData.current = data;
+      setListingData(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   // handling data for search result
@@ -60,7 +67,7 @@ const Home = () => {
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
         />
-
+        {loading && <Loader loading={loading} />}
         {/* // Listing Cards */}
         {listingData?.filter(
           (data) =>
