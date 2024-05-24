@@ -102,7 +102,7 @@ const AddResource = () => {
       <div className="flex items-center justify-center md:justify-between h-full">
         {/* // Form div  */}
         <div className="w-[50%] flex flex-col justify-center items-center ">
-          <p className="text-[26px] md:text-[32px] mb-10  font-rubik ">
+          <p className="text-[20px] md:text-[32px] my-10 md:my-0 md:mb-10  font-rubik ">
             Add a Resource
           </p>
 
