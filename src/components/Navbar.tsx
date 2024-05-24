@@ -6,7 +6,7 @@ const Navbar = () => {
   const location = useLocation();
   const pathSegment = location.pathname.split("/").pop();
   return (
-    <div className="p-4 border-b border-gray-400 flex items-center justify-between bg-white">
+    <div className="p-2 border-b border-gray-400 flex items-center justify-between bg-white">
       <div className="flex items-center justify-between w-[95%] m-auto">
         <Logo />
 
