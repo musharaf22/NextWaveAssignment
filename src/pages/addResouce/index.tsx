@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../utils/icons/BackButton";
 import { ChangeEvent, useState } from "react";
 import UploadIcon from "../utils/icons/UploadIcon";
+import { toast } from "react-toastify";
 
 interface IFormData {
   name: string;
@@ -40,6 +41,12 @@ const AddResource = () => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
+    // Validating Files type
+    if (!file.type.startsWith("image")) {
+      toast.error("File must be an image file");
+      return;
+    }
+    //getting image base64
     const base64 = await getBase64(file);
     if (!base64) return;
     setFormData({ ...formData, image: base64.toString() });
@@ -101,7 +108,11 @@ const AddResource = () => {
 
           {/* // Change Photo  */}
           <div className="flex items-center md:w-[40%] m-auto  my-6">
-            <img src={formData.image} alt="" />
+            <img
+              src={formData.image}
+              alt=""
+              className="w-[44px] h-[44px] border-2 border-gray-200 rounded-[8px]"
+            />
             <div className="flex items-center ml-4 ">
               <UploadIcon />
               {/* // File input to be hidden  */}
