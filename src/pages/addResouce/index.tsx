@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BackButton from "../utils/icons/BackButton";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import UploadIcon from "../utils/icons/UploadIcon";
 
 interface IFormData {
@@ -20,6 +20,30 @@ const AddResource = () => {
   const inputClass =
     "border-2 border-gray-300 outline-none rounded-[4px] w-[320px] h-[40px] p-2";
   const labelClass = " text-gray-500 text-[12px] leading-[16px] mb-2";
+
+  // Generating Base 64 Of An Image File
+  const getBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const base64 = await getBase64(file);
+    if (!base64) return;
+    setFormData({ ...formData, image: base64.toString() });
+  };
   return (
     <div className="relative h-[94vh] overflow-hidden ">
       {/* // Go BAck Button  */}
@@ -80,8 +104,20 @@ const AddResource = () => {
             <img src={formData.image} alt="" />
             <div className="flex items-center ml-4 ">
               <UploadIcon />
+              {/* // File input to be hidden  */}
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleImageChange}
+                id="fileInput"
+              />
               <p
                 className={`${labelClass} my-2 ml-2 hover:underline cursor-pointer`}
+                onClick={() => {
+                  const el = document.getElementById("fileInput");
+                  if (!el) return;
+                  el.click();
+                }}
               >
                 Change photo
               </p>
