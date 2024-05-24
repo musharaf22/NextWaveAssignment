@@ -35,6 +35,22 @@ const AddResource = () => {
         setValidation((prev) => {
           return { ...prev, [key]: { message: "Required field", error: true } };
         });
+      } else if (key === "link" && !value.startsWith("http" || "https")) {
+        result = false;
+        setValidation((prev) => {
+          return { ...prev, link: { error: true, message: "Invalid url" } };
+        });
+      } else if (key === "description" && value.length < 10) {
+        result = false;
+        setValidation((prev) => {
+          return {
+            ...prev,
+            description: {
+              error: true,
+              message: "Description must be at-least 10 characters",
+            },
+          };
+        });
       }
     });
     return result;
