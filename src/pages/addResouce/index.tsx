@@ -3,41 +3,43 @@ import BackButton from "../utils/icons/BackButton";
 import { ChangeEvent, useState } from "react";
 import UploadIcon from "../utils/icons/UploadIcon";
 import { toast } from "react-toastify";
+import {
+  IFormData,
+  IValidate,
+  initialFormValues,
+  validateInitialValues,
+} from "./dtos/interface.addResource";
+import { getBase64 } from "../utils/common/genBase64";
 
-interface IFormData {
-  name: string;
-  image: string;
-  description: string;
-  link: string;
-}
 const AddResource = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<IFormData>({
-    name: "",
-    image: "/4.png",
-    description: "",
-    link: "",
-  });
+
+  // Managing States
+  const [formData, setFormData] = useState<IFormData>(initialFormValues);
+
+  const [validation, setValidation] = useState<IValidate>(
+    validateInitialValues
+  );
+
   const inputClass =
     "border-2 border-gray-300 outline-none rounded-[4px] w-[320px] h-[40px] p-2";
   const labelClass = " text-gray-500 text-[12px] leading-[16px] mb-2";
 
-  // Generating Base 64 Of An Image File
-  const getBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-
-      reader.onerror = (error) => {
-        reject(error);
-      };
-
-      reader.readAsDataURL(file);
+  // Validation function
+  const validateFields = () => {
+    let result = true;
+    Object.entries(formData).forEach(([key, value]) => {
+      console.log({ key, value });
+      if (value === "") {
+        result = false;
+        setValidation((prev) => {
+          return { ...prev, [key]: { message: "Required field", error: true } };
+        });
+      }
     });
+    return result;
   };
+
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -50,6 +52,18 @@ const AddResource = () => {
     const base64 = await getBase64(file);
     if (!base64) return;
     setFormData({ ...formData, image: base64.toString() });
+  };
+
+  //handling form submit
+  const handleSubmit = async () => {
+    const validationResult = validateFields();
+
+    if (!validationResult) {
+      toast.error("Please fill form correctly");
+      return;
+    }
+
+    toast.success("Data Added Successfully");
   };
   return (
     <div className="relative h-[94vh] overflow-hidden ">
@@ -77,7 +91,15 @@ const AddResource = () => {
               type="text"
               className={inputClass}
               placeholder="Ashoka Tano"
+              autoFocus
             />
+            <small
+              className={
+                validation.name.error ? "block text-red-500" : "hidden"
+              }
+            >
+              {validation.name.message}*
+            </small>
           </div>
 
           <div className="flex flex-col items-start my-6">
@@ -89,6 +111,13 @@ const AddResource = () => {
               className={`${inputClass} placeholder-[#0B69FF]`}
               placeholder="Ashoka Tano"
             />
+            <small
+              className={
+                validation.link.error ? "block text-red-500" : "hidden"
+              }
+            >
+              {validation.link.message}*
+            </small>
           </div>
 
           <div className="flex flex-col items-start my-4 ">
@@ -104,6 +133,13 @@ const AddResource = () => {
               draggable={true}
               placeholder="Ex. Building new Connectivity platform for the team"
             />
+            <small
+              className={
+                validation.description.error ? "block text-red-500" : "hidden"
+              }
+            >
+              {validation.description.message}*
+            </small>
           </div>
 
           {/* // Change Photo  */}
@@ -133,10 +169,18 @@ const AddResource = () => {
                 Change photo
               </p>
             </div>
+            <small
+              className={
+                validation.image.error ? "block text-red-500" : "hidden"
+              }
+            >
+              {validation.image.message}*
+            </small>
           </div>
 
           <button
             className={`p-2 bg-[#0B69FF] text-white w-[93px] h-[42px] rounded-[4px] mt-8`}
+            onClick={handleSubmit}
           >
             CREATE
           </button>
