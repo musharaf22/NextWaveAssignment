@@ -62,8 +62,17 @@ const AddResource = () => {
       toast.error("Please fill form correctly");
       return;
     }
-
-    toast.success("Data Added Successfully");
+    try {
+      //   await fetch(
+      //     " https://media-content.ccbp.in/website/react-assignment/add_resource.json",
+      //     { method: "POST", body: JSON.stringify(formData) }
+      //   );
+      await fetch(
+        " https://media-content.ccbp.in/website/react-assignment/add_resource.json"
+      );
+      toast.success("Data Added Successfully");
+      setFormData(initialFormValues);
+    } catch (error) {}
   };
 
   //handling form
@@ -107,6 +116,7 @@ const AddResource = () => {
               placeholder="Ashoka Tano"
               autoFocus
               onChange={handleChange}
+              value={formData.name}
               name="name"
             />
             <small
@@ -128,6 +138,7 @@ const AddResource = () => {
               placeholder="Ashoka Tano"
               onChange={handleChange}
               name="link"
+              value={formData.link}
             />
             <small
               className={
@@ -152,6 +163,7 @@ const AddResource = () => {
               placeholder="Ex. Building new Connectivity platform for the team"
               onChange={handleChange}
               name="description"
+              value={formData.description}
             />
             <small
               className={
