@@ -65,6 +65,20 @@ const AddResource = () => {
 
     toast.success("Data Added Successfully");
   };
+
+  //handling form
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setValidation((prev) => {
+      return { ...prev, [name]: { error: false, message: "" } };
+    });
+    setFormData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
   return (
     <div className="relative h-[94vh] overflow-hidden ">
       {/* // Go BAck Button  */}
@@ -92,6 +106,8 @@ const AddResource = () => {
               className={inputClass}
               placeholder="Ashoka Tano"
               autoFocus
+              onChange={handleChange}
+              name="name"
             />
             <small
               className={
@@ -110,6 +126,8 @@ const AddResource = () => {
               type="text"
               className={`${inputClass} placeholder-[#0B69FF]`}
               placeholder="Ashoka Tano"
+              onChange={handleChange}
+              name="link"
             />
             <small
               className={
@@ -132,6 +150,8 @@ const AddResource = () => {
               cols={10}
               draggable={true}
               placeholder="Ex. Building new Connectivity platform for the team"
+              onChange={handleChange}
+              name="description"
             />
             <small
               className={
